@@ -1,3 +1,15 @@
-download : https://zenodo.org/record/5528418#.YpdlS2hBzDd 
-run DeepFake_detection.ipynb
-on terminla run : python app.py
+Step 1 : download dataset :(https://zenodo.org/record/5528418#.YpdlS2hBzDd ) and extract it into the project folder (Dataset/Train, Dataset/Validation, etc.).​
+
+step 2 : download/clone the whole project folder to your local system.​
+
+step 3 : on VS Code open the project then create an env by command: python -m venv venv.​
+
+step 4 : activate env and run command: pip install -r requirements.txt.​
+
+step 5 : run DeepFake_Detection.ipynb to train and save best_deepfake_model.keras.​​
+
+step 6 : run evaluating.ipynb to test the model on sample images.​​
+
+step 7 : make folder static and put style.css inside it; make folder templates and put index.html (or frontend.html as used in app.py).​
+
+step 8 : run app.py on terminal by command: python app.py.​
