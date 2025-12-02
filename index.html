@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepfake Image Detection</title>
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=sw
+ap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<!-- Main Content -->
+<div class="container">
+<header>
+<h1>Deepfake Image Detection</h1>
+</header>
+<div class="upload-section">
+<input type="file" id="file-upload" accept="image/*"
+style="display: none;" onchange="handleFileSelect(event)">
+<div id="upload-box" class="upload-box"
+onclick="document.getElementById('file-upload').click()">
+<p>Click to Upload Image</p>
+</div>
+<button id="submit-btn" class="submit-btn"
+onclick="submitImage()">Submit</button>
+</div>
+<div class="result" id="result">
+<h2>Result:</h2>
+<div id="result-image"></div>
+<p id="confidence"></p>
+</div>
+</div>
+<footer>
+<p>Created by: Priya Princy Abhay</p>
+</footer>
+<script>
+// Handle Image Upload
+function handleFileSelect(event) {
+const file = event.target.files[0];
+32
+const uploadBox = document.getElementById("upload-box");
+if (file) {
+const reader = new FileReader();
+reader.onload = function(e) {
+uploadBox.innerHTML = `<img src="${e.target.result}"
+alt="Uploaded Image" class="uploaded-image">`;
+};
+reader.readAsDataURL(file);
+} else {
+uploadBox.innerHTML = "<p>Click to Upload Image</p>";
+}
+}
+function submitImage() {
+const result = document.getElementById("result");
+const resultImage = document.getElementById("result-image");
+const confidence = document.getElementById("confidence");
+const file = document.getElementById("file-upload").files[0];
+if (!file) {
+alert("Please upload an image first!");
+return;
+}
+const formData = new FormData();
+formData.append("file", file);
+// Make the API call
+fetch('/predict', {
+method: 'POST',
+body: formData
+})
+.then(response => response.json())
+.then(data => {
+// Display the result
+result.style.display = "block";
+resultImage.innerHTML = `<img src="${data.image_url}"
+alt="Uploaded Image" class="uploaded-image">`;
+confidence.innerHTML = `Prediction: ${data.prediction} |
+Confidence: ${data.probability * 100}%`;
+})
+.catch(error => {
+console.error('Error:', error);
+alert('Something went wrong!');
+});
+}
+</script></body></html>
